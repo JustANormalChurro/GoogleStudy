@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Study ⭐</title>
+    <link rel="icon" type="image/png" href="Google__22G_22_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PDF.js library for reading PDF content -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <!-- html2pdf.js for saving elements as PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Tailwind dark mode configuration
+        tailwind.config = {
+          darkMode: 'class',
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #1f2937;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Google Sans', sans-serif;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3b82f6;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .flashcard { perspective: 1000px; }
+        .flashcard-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+        
+        .dark .flashcard-front, .dark .flashcard-back { background-color: #1e293b; border: 1px solid #334155;}
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #a5b4fc; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #818cf8; }
+        
+        /* Chat bubble styles */
+        .chat-bubble-user { background-color: #3b82f6; color: white; align-self: flex-end; }
+        .chat-bubble-model { background-color: #e5e7eb; color: #1f2937; align-self: flex-start; }
+        .dark .chat-bubble-model { background-color: #334155; color: #e2e8f0; }
+
+        /* Styles for AI-generated formatted content */
+        .prose { --tw-prose-body: #374151; --tw-prose-headings: #111827; --tw-prose-lead: #4b5563; --tw-prose-links: #111827; --tw-prose-bold: #111827; --tw-prose-counters: #6b7280; --tw-prose-bullets: #d1d5db; --tw-prose-hr: #e5e7eb; --tw-prose-quotes: #111827; --tw-prose-quote-borders: #e5e7eb; --tw-prose-captions: #6b7280; --tw-prose-code: #111827; --tw-prose-pre-code: #e5e7eb; --tw-prose-pre-bg: #1f2937; --tw-prose-th-borders: #d1d5db; --tw-prose-td-borders: #e5e7eb; --tw-prose-invert-body: #d1d5db; --tw-prose-invert-headings: #fff; --tw-prose-invert-lead: #9ca3af; --tw-prose-invert-links: #fff; --tw-prose-invert-bold: #fff; --tw-prose-invert-counters: #9ca3af; --tw-prose-invert-bullets: #4b5563; --tw-prose-invert-hr: #374151; --tw-prose-invert-quotes: #f3f4f6; --tw-prose-invert-quote-borders: #374151; --tw-prose-invert-captions: #9ca3af; --tw-prose-invert-code: #fff; --tw-prose-invert-pre-code: #d1d5db; --tw-prose-invert-pre-bg: rgba(0,0,0,.5); --tw-prose-invert-th-borders: #4b5563; --tw-prose-invert-td-borders: #374151; color: var(--tw-prose-body); }
+        .dark .prose { color: var(--tw-prose-invert-body); }
+        .prose h1, .prose h2, .prose h3, .prose h4 { color: var(--tw-prose-headings); margin-bottom: 0.8em; margin-top: 1.2em; font-weight: 700; }
+        .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4 { color: var(--tw-prose-invert-headings); }
+        .prose h1 { font-size: 2em; } .prose h2 { font-size: 1.5em; } .prose h3 { font-size: 1.25em; }
+        .prose p { margin-top: 1em; margin-bottom: 1em; }
+        .prose strong { color: var(--tw-prose-bold); font-weight: 600; }
+        .dark .prose strong { color: var(--tw-prose-invert-bold); }
+        .prose em { font-style: italic; }
+        .prose u { text-decoration: underline; }
+        .prose ul { list-style-type: disc; padding-left: 1.5em; margin-top: 1em; margin-bottom: 1em; }
+        .prose li { margin-top: 0.5em; margin-bottom: 0.5em; }
+        .prose hr { border-top-width: 1px; border-color: var(--tw-prose-hr); margin-top: 2em; margin-bottom: 2em; }
+        .dark .prose hr { border-color: var(--tw-prose-invert-hr); }
+    </style>
+</head>
+<body class="min-h-screen p-4 flex flex-col">
+    
+    <div id="app-container" class="w-full max-w-4xl mx-auto flex-grow">
+        <!-- Header with controls -->
+        <header class="flex items-center justify-between mb-4">
+            <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400 cursor-pointer" id="home-title">Google Study ⭐</h1>
+            <div class="flex items-center space-x-4">
+                 <!-- About Icon -->
+                <button id="about-icon" title="About App" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+                 <!-- Chatbot Icon -->
+                <button id="chatbot-icon" title="AI Assistant" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                </button>
+                <!-- History Icon -->
+                <button id="history-icon" title="Study History" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" title="Toggle Dark/Light Mode" class="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
+                    <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <!-- 1. Home / Upload View -->
+            <div id="upload-view">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg text-center relative">
+                    <div id="dev-icon" title="Developer Settings" class="absolute top-4 right-4 cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    </div>
+                    <h2 class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">Welcome Back!</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mb-8">Upload your notes, and let AI create your personalized study tools.</p>
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="relative w-full max-w-md">
+                            <input type="file" id="file-input" accept=".txt,.pdf,.doc,.docx" class="hidden" multiple>
+                            <label for="file-input" class="w-full bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg cursor-pointer hover:bg-blue-600 transition duration-300 flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                <span>Upload File(s)</span>
+                            </label>
+                            <p id="file-name" class="text-gray-500 dark:text-gray-400 mt-2 text-sm truncate"></p>
+                        </div>
+                        <button id="study-button" class="bg-blue-600 text-white font-bold py-3 px-12 rounded-lg hover:bg-blue-700 transition duration-300 disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed" disabled>Study!</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading View -->
+            <div id="loading-view" class="hidden text-center p-8">
+                <div class="flex justify-center items-center mb-4"><div class="loader"></div></div>
+                <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300">Analyzing your document...</h2>
+                <p id="loading-message" class="text-gray-500 dark:text-gray-400 mt-2">This may take a moment.</p>
+            </div>
+
+            <!-- Summary View -->
+            <div id="summary-view" class="hidden">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
+                    <div id="success-alert" class="bg-green-100 dark:bg-green-900/50 border-l-4 border-green-500 text-green-700 dark:text-green-300 p-4 rounded-md mb-6" role="alert">
+                        <p class="font-bold">Success!</p>
+                        <p>Your file(s) have been uploaded and analyzed. Here's a quick summary:</p>
+                    </div>
+                    <div id="summary-content" class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-8 max-h-60 overflow-y-auto"></div>
+                    <h3 class="text-xl font-semibold text-center mb-6">What would you like to create?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button data-action="quiz" class="action-button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 rounded-lg transition">Create Quiz</button>
+                        <button data-action="flashcards" class="action-button bg-purple-500 hover:bg-purple-600 text-white font-bold py-4 rounded-lg transition">Create Flashcards</button>
+                        <button data-action="guide" class="action-button bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-lg transition">Create Study Guide</button>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <button id="start-over-button" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 font-semibold">Start Over</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Study Material View (for quiz, flashcards, guide) -->
+            <div id="study-material-view" class="hidden">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
+                    <div id="material-content" class="mb-6"></div>
+                    <button id="back-to-options-button" class="w-full bg-gray-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-600 transition duration-300">Back to Options</button>
+                </div>
+            </div>
+
+            <!-- Results View -->
+            <div id="results-view" class="hidden">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-3xl font-bold mb-2 text-center">Quiz Results</h2>
+                    <p id="score" class="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-6 text-center"></p>
+                    <div id="detailed-results" class="text-left mt-8 max-h-96 overflow-y-auto space-y-4 mb-8"></div>
+                    <div class="text-left bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-8">
+                        <div id="ai-analysis" class="prose dark:prose-invert max-w-none"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button id="back-to-home-button" class="action-button bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 rounded-lg">Back to Home</button>
+                        <button id="growth-quiz-button" class="action-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg">Quiz on Growth Points</button>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- NEW: AI Chatbot View -->
+            <div id="chatbot-view" class="hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col h-[75vh]">
+                    <h2 class="text-2xl font-bold mb-4 text-center border-b pb-3 dark:border-gray-600">AI Assistant</h2>
+                    <div id="chat-messages" class="flex-grow overflow-y-auto p-4 space-y-4">
+                        <!-- Chat messages will be appended here -->
+                        <div class="chat-bubble-model rounded-lg p-3 max-w-lg">
+                           Hello! I'm your AI study assistant. Ask me anything about your notes, or upload a new PDF below to get started.
+                        </div>
+                    </div>
+                    <div id="chat-loading-indicator" class="hidden flex items-center justify-center p-2">
+                         <div class="chat-bubble-model rounded-lg p-3 max-w-lg flex items-center space-x-2">
+                           <div class="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style="animation-delay: 0s;"></div>
+                           <div class="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+                           <div class="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+                         </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t dark:border-gray-600">
+                        <div class="flex items-center space-x-2">
+                             <input type="file" id="chat-file-input" accept=".txt,.pdf" class="hidden">
+                            <label for="chat-file-input" class="cursor-pointer text-gray-500 hover:text-blue-500 p-2 rounded-full" title="Upload PDF/TXT">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
+                            </label>
+                            <textarea id="chat-input" placeholder="Ask a question... (Shift+Enter for new line)" class="flex-grow p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none" rows="1"></textarea>
+                            <button id="chat-send-btn" class="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                            </button>
+                        </div>
+                        <p id="chat-file-name" class="text-xs text-gray-500 dark:text-gray-400 mt-1 pl-12 truncate"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: History View -->
+            <div id="history-view" class="hidden">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg min-h-[75vh]">
+                    <h2 class="text-2xl font-bold mb-4 text-center border-b pb-3 dark:border-gray-600">Study History</h2>
+                    <div id="history-content" class="text-center">
+                        <!-- History items will be appended here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="text-center text-xs text-gray-500 dark:text-gray-400 mt-8 pb-4">
+        <p>Google is a registered trademark of Google LLC; this app is not affiliated with, sponsored by, or endorsed by Google.</p>
+    </footer>
+
+    <!-- Modals (Quiz Settings, etc.) -->
+    <div id="quiz-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <h3 class="text-2xl font-bold mb-6">Quiz Settings</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="quiz-questions" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Number of Questions:</label>
+                    <input type="number" id="quiz-questions" value="5" min="1" max="20" class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label for="quiz-difficulty" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Difficulty:</label>
+                    <select id="quiz-difficulty" class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <option>Easy</option><option selected>Medium</option><option>Hard</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <input id="instant-feedback" type="checkbox" checked class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="instant-feedback" class="ml-2 block text-sm text-gray-900 dark:text-gray-200">Instant Feedback</label>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-end space-x-3">
+                <button id="cancel-quiz" class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500">Cancel</button>
+                <button id="start-quiz" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+    <div id="flashcard-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+         <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <h3 class="text-2xl font-bold mb-6">Flashcard Settings</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="flashcard-count" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Number of Flashcards:</label>
+                    <input type="number" id="flashcard-count" value="10" min="1" max="50" class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 shadow-sm">
+                </div>
+                 <div>
+                    <label for="flashcard-difficulty" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Difficulty:</label>
+                    <select id="flashcard-difficulty" class="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 shadow-sm">
+                       <option>Easy</option><option selected>Medium</option><option>Hard</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-end space-x-3">
+                <button id="cancel-flashcards" class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500">Cancel</button>
+                <button id="generate-flashcards" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Generate</button>
+            </div>
+        </div>
+    </div>
+    <div id="dev-code-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-sm">
+            <h3 class="text-2xl font-bold mb-4">Developer Access</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6">Please enter the developer code to continue.</p>
+            <input type="password" id="dev-code-input" class="w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 shadow-sm" placeholder="••••">
+            <p id="dev-code-error" class="text-red-500 text-sm mt-2 hidden">Incorrect code. Please try again.</p>
+            <div class="mt-8 flex justify-end space-x-3">
+                <button id="cancel-dev-code" class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500">Cancel</button>
+                <button id="submit-dev-code" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div id="api-settings-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
+            <h3 class="text-2xl font-bold mb-2">API Key Settings</h3>
+            <p class="text-green-600 mb-6 font-semibold">Congratulations! Access granted.</p>
+            <div class="space-y-4">
+                <label for="api-key-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Your API Key:</label>
+                <input type="text" id="api-key-input" class="w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 shadow-sm">
+                <p class="text-xs text-gray-500 dark:text-gray-400">Changes are saved automatically.</p>
+                <div class="mt-4">
+                    <button id="view-api-list-btn" class="w-full bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600">View Official API List</button>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-end">
+                <button id="close-api-settings" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Close</button>
+            </div>
+        </div>
+    </div>
+    <div id="api-error-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-lg shadow-2xl w-full max-w-md dark:bg-red-900/50 dark:text-red-300">
+            <p class="font-bold mb-2">API Error</p>
+            <p>Could not connect to the AI model. Please check your API key in the developer settings or try again later.</p>
+            <div class="mt-6 text-right">
+                <button id="close-api-error" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: API Key List Modal -->
+    <div id="api-list-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-2xl">
+            <h3 class="text-2xl font-bold mb-4">Official API Key List</h3>
+            <div id="api-key-list-container" class="space-y-2 max-h-80 overflow-y-auto pr-2">
+                <!-- API keys will be rendered here -->
+            </div>
+            <div class="mt-4">
+                <button id="add-api-key-btn" class="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Add New Key</button>
+            </div>
+            <div class="mt-8 flex justify-end space-x-3">
+                 <button id="save-api-list-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Save and Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: Confirmation Modal -->
+    <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-sm">
+            <h3 id="confirm-title" class="text-xl font-bold mb-4">Are you sure?</h3>
+            <p id="confirm-message" class="text-gray-600 dark:text-gray-300 mb-6">This action cannot be undone.</p>
+            <div class="mt-8 flex justify-end space-x-3">
+                <button id="confirm-cancel-btn" class="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500">Cancel</button>
+                <button id="confirm-ok-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: About Modal -->
+    <div id="about-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+            <h3 class="text-2xl font-bold mb-4">About Google Study ⭐</h3>
+            <div class="prose dark:prose-invert max-w-none overflow-y-auto pr-4">
+                <p class="lead font-semibold">This app is 100% free to use for all users.</p>
+                <p>Google Study is your personal AI-powered study assistant, designed to streamline your learning process. Simply upload your notes, and let our intelligent tools do the heavy lifting.</p>
+                <h4>Core Features:</h4>
+                <ul>
+                    <li><strong>AI-Generated Study Tools:</strong> Instantly create custom Quizzes, Flashcards, and comprehensive Study Guides from your course materials.</li>
+                    <li><strong>Intelligent Assistant:</strong> Chat with our AI to get summaries of your documents, ask specific questions, and deepen your understanding of the content.</li>
+                    <li><strong>Full History:</strong> Never lose track of your progress. All generated study materials are saved in your history for easy access and review.</li>
+                    <li><strong>File Compatibility:</strong> Upload your notes in popular formats like .pdf and .txt.</li>
+                    <li><strong>Customizable Experience:</strong> Toggle between a sleek dark mode and a clean light mode to suit your preference.</li>
+                </ul>
+                <hr>
+                <p class="text-xs">
+                    Google Study is an independent application designed to assist users with study organization and productivity. It is not affiliated with, sponsored by, or endorsed by Google LLC. The use of the name 'Google' is solely for descriptive purposes in accordance with trademark guidelines and does not imply any partnership or endorsement.
+                </p>
+            </div>
+            <div class="mt-8 text-right">
+                <button id="close-about-modal" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // --- State Management ---
+        let fileContent = '';
+        let lastAiAnalysis = '';
+        let quizData = [];
+        let userAnswers = {};
+        let currentQuestionIndex = 0;
+        let quizSettings = {};
+        let apiKey = '';
+        let apiUrl = '';
+        let chatHistory = [{ role: 'model', parts: [{ text: "Hello! I'm your AI study assistant. I know all about the 'Google Study ⭐' app. Ask me anything about your notes, or upload a new PDF below to get started." }] }];
+        let chatFileContent = null;
+        let confirmCallback = null;
+
+        // --- Constants ---
+        const DEFAULT_API_KEY = 'AIzaSyD5igU4lUfHMBZRV89La7_VeEGT2WbAx1o';
+        const HISTORY_KEY = 'google-study-history';
+        const THEME_KEY = 'google-study-theme';
+        const API_KEY = 'google-study-api-key';
+        const API_KEY_LIST = 'google-study-api-key-list';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js`;
+
+        // --- DOM Elements ---
+        const mainContent = document.getElementById('main-content');
+        const views = { 
+            upload: document.getElementById('upload-view'), 
+            loading: document.getElementById('loading-view'), 
+            summary: document.getElementById('summary-view'), 
+            studyMaterial: document.getElementById('study-material-view'), 
+            results: document.getElementById('results-view'),
+            chatbot: document.getElementById('chatbot-view'),
+            history: document.getElementById('history-view'),
+        };
+        const modals = { 
+            quiz: document.getElementById('quiz-modal'), 
+            flashcard: document.getElementById('flashcard-modal'),
+            devCode: document.getElementById('dev-code-modal'),
+            apiSettings: document.getElementById('api-settings-modal'),
+            apiError: document.getElementById('api-error-modal'),
+            apiList: document.getElementById('api-list-modal'),
+            confirm: document.getElementById('confirm-modal'),
+            about: document.getElementById('about-modal'),
+        };
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name');
+        const studyButton = document.getElementById('study-button');
+        const summaryContent = document.getElementById('summary-content');
+        const materialContent = document.getElementById('material-content');
+        
+        // --- NEW DOM Elements ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const homeTitle = document.getElementById('home-title');
+        const historyIcon = document.getElementById('history-icon');
+        const chatbotIcon = document.getElementById('chatbot-icon');
+        const aboutIcon = document.getElementById('about-icon');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatFileInput = document.getElementById('chat-file-input');
+        const chatFileName = document.getElementById('chat-file-name');
+        const chatLoadingIndicator = document.getElementById('chat-loading-indicator');
+        const viewApiListBtn = document.getElementById('view-api-list-btn');
+
+        // --- Initializer ---
+        function initializeApp() {
+            apiKey = localStorage.getItem(API_KEY) || DEFAULT_API_KEY;
+            initializeApiList();
+            updateApiUrl();
+            applyTheme();
+            showView('upload');
+            addEventListeners();
+        }
+
+        // --- View & Modal Management ---
+        const showView = (viewName) => { 
+            Object.values(views).forEach(v => v.classList.add('hidden')); 
+            if(views[viewName]) {
+                views[viewName].classList.remove('hidden');
+            } else {
+                views.upload.classList.remove('hidden'); // Fallback to home
+            }
+            window.scrollTo(0, 0);
+        };
+        const showModal = (modalName) => { if(modals[modalName]) { modals[modalName].classList.remove('hidden'); modals[modalName].classList.add('flex'); } };
+        const hideModals = () => { Object.values(modals).forEach(m => { m.classList.add('hidden'); m.classList.remove('flex'); }); };
+        const showConfirmModal = (title, message, callback) => {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            confirmCallback = callback;
+            showModal('confirm');
+        };
+
+        // --- App Reset ---
+        function resetApp() {
+            fileContent = ''; lastAiAnalysis = ''; quizData = []; userAnswers = {}; currentQuestionIndex = 0;
+            fileInput.value = ''; fileNameDisplay.textContent = ''; studyButton.disabled = true;
+            window.speechSynthesis.cancel();
+            showView('upload');
+        }
+        
+        function updateApiUrl() {
+            apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        }
+        
+        // --- Dark/Light Theme Logic ---
+        function applyTheme() {
+            const theme = localStorage.getItem(THEME_KEY);
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            }
+        }
+
+        // --- Markdown Formatting ---
+        function markdownToHtml(text) {
+             if (!text) return '';
+             let html = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+             html = html
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/__(.*?)__/g, '<strong>$1</strong>') 
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/_(.*?)_/g, '<u>$1</u>') 
+                .replace(/^\s*[-*] (.*$)/gim, '<li>$1</li>')
+                .replace(/<\/li>\n?<li>/g, '</li><li>')
+                .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+                .replace(/<\/ul>\s*<ul>/gs, '')
+                .replace(/\n\n/g, '<p>')
+                .replace(/\n/g, '<br>');
+                
+            return html.replace(/<br>\s*<p>/g, '<p>').replace(/<\/p>\s*<br>/g, '</p>');
+        }
+
+        // --- API Call Logic ---
+        async function callGemini(contents) {
+            if (!apiKey) {
+                showModal('apiError');
+                return null;
+            }
+            try {
+                const response = await fetch(apiUrl, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ contents }), 
+                });
+                if (!response.ok) {
+                    if (response.status === 400 || response.status === 403) {
+                        showModal('apiError');
+                        return null;
+                    }
+                    const errorBody = await response.json(); 
+                    throw new Error(`API Error: ${response.status} - ${errorBody.error.message}`);
+                }
+                const data = await response.json();
+                if (data.candidates && data.candidates.length > 0 && data.candidates[0].content.parts[0].text) {
+                   return data.candidates[0].content.parts[0].text;
+                } else {
+                   console.warn("API response was empty or invalid.", data);
+                   return "The AI model returned an empty response. This might be due to safety filters. Please try rephrasing your request.";
+                }
+            } catch (error) {
+                console.error("Gemini API call failed:", error);
+                if (!modals.apiError.classList.contains('flex')) {
+                    alert(`An error occurred: ${error.message}`);
+                }
+                return null;
+            }
+        }
+        
+        // --- File Handling ---
+        const setupFileHandler = (inputEl, nameDisplayEl, onRead) => {
+            inputEl.addEventListener('change', async (e) => {
+                const files = e.target.files;
+                if (!files.length) {
+                    nameDisplayEl.textContent = '';
+                    onRead(null, 0);
+                    return;
+                }
+                nameDisplayEl.textContent = `${files.length} file(s) selected. Reading...`;
+                onRead(null, -1);
+                const fileReadPromises = Array.from(files).map(file => {
+                    return file.type === 'application/pdf' ? readPdfFile(file) : readTextFile(file);
+                });
+
+                try {
+                    const contents = await Promise.all(fileReadPromises);
+                    const combinedContent = contents.join('\n\n---\n\n');
+                    nameDisplayEl.textContent = `${files.length} file(s) ready!`;
+                    onRead(combinedContent, files.length);
+                } catch (error) {
+                    console.error("Error reading files:", error);
+                    nameDisplayEl.textContent = 'Error reading one or more files.';
+                    onRead(null, 0);
+                }
+            });
+        };
+
+        const readTextFile = (file) => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = e => resolve(e.target.result);
+            reader.onerror = e => reject(e);
+            reader.readAsText(file);
+        });
+
+        const readPdfFile = (file) => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const pdf = await pdfjsLib.getDocument(e.target.result).promise;
+                    let textContent = '';
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const text = await page.getTextContent();
+                        textContent += text.items.map(item => item.str).join(' ') + '\n';
+                    }
+                    resolve(textContent);
+                } catch (error) { reject(error); }
+            };
+            reader.onerror = e => reject(e);
+            reader.readAsArrayBuffer(file);
+        });
+        
+        // --- API List Management ---
+        function initializeApiList() {
+            const keys = localStorage.getItem(API_KEY_LIST);
+            if (!keys) {
+                const defaultKeys = [
+                    { id: 1, key: 'AIzaSyAGOFSNKu_Kd9DIzZoRvs3UUapnbya4O_E' },
+                    { id: 2, key: 'AIzaSyBOUohgwrSR4t7EwJXQ3zdYG2w8z9viDO4' },
+                    { id: 3, key: 'AIzaSyBwiGtxWjgxHQxOVwElhQhOlXwBsJ4PIxE' },
+                ];
+                localStorage.setItem(API_KEY_LIST, JSON.stringify(defaultKeys));
+            }
+        }
+
+        function renderApiKeyList() {
+            const container = document.getElementById('api-key-list-container');
+            const keys = JSON.parse(localStorage.getItem(API_KEY_LIST)) || [];
+            container.innerHTML = keys.map(item => `
+                <div class="flex items-center space-x-2" data-id="${item.id}">
+                    <input type="text" value="${item.key}" class="api-key-list-input flex-grow p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                    <button class="remove-api-key-btn bg-red-500 text-white p-2 rounded-md hover:bg-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    </button>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('.remove-api-key-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.parentElement.dataset.id;
+                    showConfirmModal('Delete API Key?', 'This key will be permanently removed.', () => {
+                        let currentKeys = JSON.parse(localStorage.getItem(API_KEY_LIST)) || [];
+                        currentKeys = currentKeys.filter(k => k.id != id);
+                        localStorage.setItem(API_KEY_LIST, JSON.stringify(currentKeys));
+                        renderApiKeyList();
+                    });
+                });
+            });
+        }
+        
+        // --- Chatbot Logic ---
+        function renderChatMessages() {
+            chatMessages.innerHTML = '';
+            chatHistory.forEach(msg => {
+                const bubble = document.createElement('div');
+                bubble.classList.add('rounded-lg', 'p-3', 'max-w-lg', 'break-words');
+                bubble.classList.add(msg.role === 'user' ? 'chat-bubble-user' : 'chat-bubble-model');
+                
+                if (msg.role === 'model') {
+                    bubble.innerHTML = markdownToHtml(msg.parts[0].text);
+                    bubble.classList.add('prose', 'dark:prose-invert', 'max-w-none');
+                } else {
+                    bubble.textContent = msg.parts[0].text;
+                }
+                chatMessages.appendChild(bubble);
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        async function sendMessageToChatbot() {
+            const userText = chatInput.value.trim();
+            if (!userText && !chatFileContent) return;
+
+            const userPart = { role: 'user', parts: [{ text: userText }] };
+            if (chatFileContent) {
+                userPart.parts[0].text += `\n\n---START OF DOCUMENT---\n${chatFileContent}\n---END OF DOCUMENT---`;
+                chatFileContent = null;
+                chatFileInput.value = '';
+                chatFileName.textContent = '';
+                chatInput.placeholder = "Ask a question... (Shift+Enter for new line)";
+            }
+            
+            chatHistory.push(userPart);
+            renderChatMessages();
+
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            chatLoadingIndicator.classList.remove('hidden');
+
+            const apiContents = [...chatHistory]; 
+            const responseText = await callGemini(apiContents);
+            chatLoadingIndicator.classList.add('hidden');
+            
+            if (responseText) {
+                chatHistory.push({ role: 'model', parts: [{ text: responseText }] });
+            } else {
+                chatHistory.push({ role: 'model', parts: [{ text: "Sorry, I couldn't connect to the AI. Please check your API key or try again." }] });
+            }
+            renderChatMessages();
+        }
+        
+        // --- History Logic ---
+        function saveToHistory(type, title, data) {
+            const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+            const newEntry = { id: Date.now(), type, title, date: new Date().toLocaleString(), data };
+            history.unshift(newEntry);
+            if (history.length > 50) history.pop(); 
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        }
+
+        function renderHistoryList() {
+            const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+            const historyContent = document.getElementById('history-content');
+            if (history.length === 0) {
+                historyContent.innerHTML = '<p class="text-gray-500 dark:text-gray-400 mt-8">No study history found.</p>';
+                return;
+            }
+            historyContent.innerHTML = `
+                <ul class="space-y-3 text-left">
+                    ${history.map(item => `
+                        <li data-id="${item.id}" class="history-item p-4 border dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <p class="font-semibold">${item.title}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${item.type.charAt(0).toUpperCase() + item.type.slice(1)} - ${item.date}</p>
+                        </li>
+                    `).join('')}
+                </ul>`;
+                
+            historyContent.querySelectorAll('.history-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const itemToView = history.find(item => item.id === Number(el.dataset.id));
+                    if (itemToView) viewHistoryItem(itemToView);
+                });
+            });
+        }
+        
+        function viewHistoryItem(item) {
+            showView('studyMaterial');
+            const backBtn = document.getElementById('back-to-options-button');
+            backBtn.onclick = () => { renderHistoryList(); showView('history'); };
+            backBtn.textContent = "Back to History";
+            
+            switch(item.type) {
+                case 'quiz': renderQuizReview(item.data); break;
+                case 'flashcards': renderFlashcards(item.data.cards); break;
+                case 'guide': renderStudyGuide(item.data.guideHtml, false); break;
+            }
+        }
+        
+        function renderQuizReview(data) {
+            let detailedResultsHtml = '<h3 class="text-xl font-bold mb-4">Quiz Review</h3>';
+            data.quizData.forEach((q, i) => {
+                const userAnswerIndex = data.userAnswers[i];
+                const isCorrect = userAnswerIndex === q.correctAnswerIndex;
+                const userAnswerText = userAnswerIndex !== undefined ? q.options[userAnswerIndex] : "<em>Not answered</em>";
+                detailedResultsHtml += `<div class="p-4 rounded-lg border ${isCorrect ? 'border-green-300 bg-green-50 dark:bg-green-900/50 dark:border-green-700' : 'border-red-300 bg-red-50 dark:bg-red-900/50 dark:border-red-700'}"><p class="font-semibold">${i + 1}. ${q.question}</p><p class="mt-2 text-sm"><strong>Your answer:</strong> ${userAnswerText} ${isCorrect ? '✅' : '❌'}</p>${!isCorrect ? `<p class="text-sm"><strong>Correct answer:</strong> ${q.options[q.correctAnswerIndex]}</p>` : ''}<p class="mt-1 text-xs text-gray-600 dark:text-gray-400"><em><strong>Rationale:</strong> ${q.rationale}</em></p></div>`;
+            });
+            detailedResultsHtml += `<hr class="my-4"><h3 class="text-xl font-bold mb-4">AI Performance Analysis</h3><div class="prose dark:prose-invert max-w-none">${markdownToHtml(data.aiAnalysis)}</div>`;
+             materialContent.innerHTML = `<div class="space-y-4">${detailedResultsHtml}</div>`;
+        }
+
+        // --- Quiz, Flashcard, Study Guide Logic ---
+        async function generateQuiz(fromGrowthPoints = false) {
+            hideModals(); showView('loading');
+            quizSettings = { count: document.getElementById('quiz-questions').value, difficulty: document.getElementById('quiz-difficulty').value, instantFeedback: document.getElementById('instant-feedback').checked };
+            let prompt;
+            if (fromGrowthPoints && lastAiAnalysis) {
+                document.getElementById('loading-message').textContent = `Generating new quiz from your growth points...`;
+                prompt = `Based on the following content and the user's previous performance analysis, create a new multiple-choice quiz with ${quizSettings.count} questions focusing on their growth points.\n\nOriginal Content: "${fileContent}"\n\nPrevious Analysis: "${lastAiAnalysis}"\n\nInstructions: Generate a valid JSON array of objects. Each object must have keys: "question", "options" (array of 4 strings), "correctAnswerIndex" (0-3), and "rationale". Do not include any markdown code fences.`;
+            } else {
+                 document.getElementById('loading-message').textContent = `Generating ${quizSettings.count}-question quiz...`;
+                 prompt = `Based on the following content, generate a multiple-choice quiz. Content: "${fileContent}"\n\nInstructions: Create ${quizSettings.count} questions of ${quizSettings.difficulty} difficulty. Format as a valid JSON array of objects. Each object must have keys: "question", "options" (array of 4 strings), "correctAnswerIndex" (0-3), and "rationale". Do not include any markdown code fences.`;
+            }
+            const contents = [{ parts: [{ text: prompt }] }];
+            const response = await callGemini(contents);
+            if (response) {
+                try {
+                    quizData = JSON.parse(response.replace(/```json/g, '').replace(/```/g, '').trim());
+                    userAnswers = {}; currentQuestionIndex = 0;
+                    renderQuestion();
+                    showView('studyMaterial');
+                } catch (e) {
+                    alert('AI returned an invalid format for the quiz.'); console.error("JSON parsing error:", e, "Response:", response); showView('summary');
+                }
+            } else { showView('summary'); }
+        }
+        function renderQuestion() {
+            const question = quizData[currentQuestionIndex];
+            const optionsHtml = question.options.map((option, index) => `<button data-index="${index}" class="option-btn w-full text-left p-4 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition ${userAnswers[currentQuestionIndex] === index ? 'bg-indigo-100 dark:bg-indigo-900/50 border-indigo-400' : 'border-gray-300 dark:border-gray-600'}">${option}</button>`).join('');
+            materialContent.innerHTML = `<div class="mb-4"><p class="text-gray-500 dark:text-gray-400 font-medium">Question ${currentQuestionIndex + 1} of ${quizData.length}</p><h3 class="text-2xl font-semibold mt-1">${question.question}</h3></div><div class="space-y-3">${optionsHtml}</div><div id="feedback" class="mt-6"></div><div class="flex justify-between mt-8"><button id="prev-question-btn" class="bg-gray-200 dark:bg-gray-600 px-6 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed" ${currentQuestionIndex === 0 ? 'disabled' : ''}>Previous</button><button id="next-question-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">${currentQuestionIndex === quizData.length - 1 ? 'Finish' : 'Next'}</button></div>`;
+            materialContent.querySelectorAll('.option-btn').forEach(btn => btn.addEventListener('click', handleAnswer));
+            document.getElementById('prev-question-btn').addEventListener('click', () => { if(currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); }});
+            document.getElementById('next-question-btn').addEventListener('click', () => {
+                if (currentQuestionIndex === quizData.length - 1) showResults(); else { currentQuestionIndex++; renderQuestion(); }
+            });
+        }
+        function handleAnswer(e) {
+            const selectedIndex = parseInt(e.target.dataset.index);
+            userAnswers[currentQuestionIndex] = selectedIndex;
+            if (quizSettings.instantFeedback) {
+                const question = quizData[currentQuestionIndex];
+                const isCorrect = selectedIndex === question.correctAnswerIndex;
+                materialContent.querySelectorAll('.option-btn').forEach((btn, index) => {
+                    btn.disabled = true;
+                    if (index === question.correctAnswerIndex) btn.classList.add('bg-green-200', 'border-green-500', 'dark:bg-green-900/50', 'dark:border-green-600');
+                    if (index === selectedIndex && !isCorrect) btn.classList.add('bg-red-200', 'border-red-500', 'dark:bg-red-900/50', 'dark:border-red-600');
+                });
+                document.getElementById('feedback').innerHTML = `<div class="p-4 rounded-lg ${isCorrect ? 'bg-green-100 dark:bg-green-900/50' : 'bg-red-100 dark:bg-red-900/50'}"><h4 class="font-bold">${isCorrect ? 'Correct!' : 'Incorrect.'}</h4><p>${question.rationale}</p></div>`;
+                document.getElementById('next-question-btn').focus();
+            } else { renderQuestion(); }
+        }
+        async function showResults() {
+            let scoreNum = 0;
+            quizData.forEach((q, i) => { if(userAnswers[i] === q.correctAnswerIndex) scoreNum++; });
+            const percentage = quizData.length > 0 ? (scoreNum / quizData.length) * 100 : 0;
+            const scoreText = `${scoreNum} / ${quizData.length} (${percentage.toFixed(1)}%)`;
+            
+            document.getElementById('score').textContent = scoreText;
+            showView('loading');
+            document.getElementById('loading-message').textContent = 'Analyzing your performance...';
+            
+            const summaryForAI = quizData.map((q, i) => { const answered = userAnswers[i] !== undefined; return `Question: "${q.question}" - User answered: "${answered ? q.options[userAnswers[i]] : 'No Answer'}" (${answered && userAnswers[i] === q.correctAnswerIndex ? 'Correct' : 'Incorrect'}). Correct answer was: "${q.options[q.correctAnswerIndex]}"`}).join('\n');
+            const prompt = `A user finished a quiz. Analyze their performance:\n${summaryForAI}\n\nProvide a professional analysis in Markdown. Use a H3 header '### Performance Overview'. For 'Key Strength', 'Area for Growth', and 'Actionable Recommendation', use H4 headers ('####...'). Use bullet points ('-'). No code fences or html tags.`;
+            lastAiAnalysis = await callGemini([{ parts: [{ text: prompt }] }]);
+
+            saveToHistory('quiz', `Quiz - ${scoreText}`, { quizData, userAnswers, score: scoreText, aiAnalysis: lastAiAnalysis });
+
+            let detailedResultsHtml = '<h3 class="text-xl font-bold mb-4">Detailed Breakdown:</h3>';
+            quizData.forEach((q, i) => {
+                const userAnswerIndex = userAnswers[i];
+                const isCorrect = userAnswerIndex === q.correctAnswerIndex;
+                const userAnswerText = userAnswerIndex !== undefined ? q.options[userAnswerIndex] : "<em>Not answered</em>";
+                detailedResultsHtml += `<div class="p-4 rounded-lg border ${isCorrect ? 'border-green-300 bg-green-50 dark:bg-green-900/50 dark:border-green-700' : 'border-red-300 bg-red-50 dark:bg-red-900/50 dark:border-red-700'}"><p class="font-semibold">${i + 1}. ${q.question}</p><p class="mt-2 text-sm"><strong>Your answer:</strong> ${userAnswerText} ${isCorrect ? '✅' : '❌'}</p>${!isCorrect ? `<p class="text-sm"><strong>Correct answer:</strong> ${q.options[q.correctAnswerIndex]}</p>` : ''}<p class="mt-1 text-xs text-gray-600 dark:text-gray-400"><em><strong>Rationale:</strong> ${q.rationale}</em></p></div>`;
+            });
+            document.getElementById('detailed-results').innerHTML = detailedResultsHtml;
+            document.getElementById('ai-analysis').innerHTML = markdownToHtml(lastAiAnalysis) || "<p>Could not generate AI analysis.</p>";
+            showView('results');
+        }
+
+        async function generateFlashcards() {
+            hideModals(); showView('loading');
+            const settings = { count: document.getElementById('flashcard-count').value, difficulty: document.getElementById('flashcard-difficulty').value };
+            document.getElementById('loading-message').textContent = `Generating ${settings.count} flashcards...`;
+            const prompt = `Based on this content: "${fileContent}"\nGenerate ${settings.count} flashcards of ${settings.difficulty} difficulty. Format as a valid JSON array of objects, each with "term" and "definition" keys. Do not include markdown code fences.`;
+            const response = await callGemini([{ parts: [{ text: prompt }] }]);
+            if (response) {
+                try { 
+                    const cards = JSON.parse(response.replace(/```json/g, '').replace(/```/g, '').trim());
+                    saveToHistory('flashcards', `${settings.count} Flashcards`, { cards });
+                    renderFlashcards(cards);
+                } catch (e) { 
+                    alert('AI returned an invalid format for flashcards.'); console.error("JSON parse error:", e, "Response:", response); showView('summary'); 
+                }
+            } else { showView('summary'); }
+        }
+        function renderFlashcards(flashcards) {
+            let currentIndex = 0;
+            const updateCard = () => {
+                if (currentIndex >= flashcards.length) { showFlashcardCompletion(); return; }
+                const card = flashcards[currentIndex];
+                materialContent.innerHTML = `<p class="text-center text-gray-500 dark:text-gray-400 mb-4">Card ${currentIndex + 1} of ${flashcards.length}</p><div class="flashcard h-64 w-full max-w-lg mx-auto cursor-pointer"><div class="flashcard-inner"><div class="flashcard-front bg-white dark:bg-gray-700 shadow-md"><h3 class="text-3xl font-bold text-center">${card.term}</h3></div><div class="flashcard-back bg-white dark:bg-gray-700 shadow-md" style="transform: rotateY(180deg);"><p class="text-lg text-center">${card.definition}</p></div></div></div><div class="flex justify-between items-center mt-6 max-w-lg mx-auto"><button id="prev-card" class="bg-gray-200 dark:bg-gray-600 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 disabled:opacity-50" ${currentIndex === 0 ? 'disabled' : ''}>Prev</button><span>Click card to flip</span><button id="next-card" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Next</button></div>`;
+                document.querySelector('.flashcard').addEventListener('click', e => e.currentTarget.classList.toggle('flipped'));
+                document.getElementById('prev-card').addEventListener('click', () => { if (currentIndex > 0) { currentIndex--; updateCard(); }});
+                document.getElementById('next-card').addEventListener('click', () => { currentIndex++; updateCard(); });
+            };
+            updateCard(); showView('studyMaterial');
+        }
+        function showFlashcardCompletion() {
+            materialContent.innerHTML = `<div class="text-center py-10"><h2 class="text-3xl font-bold mb-4">You finished the flashcards!</h2><p class="text-gray-600 dark:text-gray-300 mb-8">What would you like to do next?</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto"><button id="fc-to-quiz" class="action-button bg-indigo-500 text-white font-bold py-3 rounded-lg">Create Quiz</button><button id="fc-to-guide" class="action-button bg-pink-500 text-white font-bold py-3 rounded-lg">Create Study Guide</button></div></div>`;
+            document.getElementById('fc-to-quiz').addEventListener('click', () => showModal('quiz'));
+            document.getElementById('fc-to-guide').addEventListener('click', generateStudyGuide);
+        }
+        async function generateStudyGuide() {
+            hideModals(); showView('loading');
+            document.getElementById('loading-message').textContent = 'Generating study guide...';
+            const prompt = `Create a comprehensive study guide from the provided content. Use Markdown syntax: H2 (##) for main topics, H3 (###) for sub-topics, unordered lists (-) for key points, and double asterisks (**) to bold terms. Ensure good spacing. No code fences or html tags. The output must be pure Markdown. Content:\n\n---\n\n${fileContent}`;
+            const guide = await callGemini([{ parts: [{ text: prompt }] }]);
+            if (guide) {
+                saveToHistory('guide', 'Study Guide', { guideHtml: guide });
+                renderStudyGuide(guide, true); 
+            } else { showView('summary'); }
+        }
+        function renderStudyGuide(guideMarkdown, setupToolbar) {
+            materialContent.innerHTML = `<div id="guide-toolbar" class="flex flex-wrap gap-2 items-center p-2 rounded-lg bg-gray-100 dark:bg-gray-700 mb-4 border dark:border-gray-600 sticky top-0 z-10"><button id="tts-play" class="toolbar-btn bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 p-2 rounded-md">▶️ Play</button><button id="tts-pause" class="toolbar-btn bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 p-2 rounded-md">⏸️ Pause</button><button id="tts-stop" class="toolbar-btn bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 p-2 rounded-md">⏹️ Stop</button><div class="flex-grow"></div><button id="copy-guide" class="toolbar-btn bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md">Copy Text</button><button id="download-guide" class="toolbar-btn bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md">Download PDF</button></div><div id="study-guide-content" class="prose dark:prose-invert max-w-none">${markdownToHtml(guideMarkdown)}</div>`;
+            if (setupToolbar) setupStudyGuideToolbar();
+            showView('studyMaterial');
+        }
+
+        function setupStudyGuideToolbar() {
+            const contentDiv = document.getElementById('study-guide-content');
+            document.getElementById('download-guide').addEventListener('click', () => {
+                const opt = { margin: 1, filename: 'study-guide.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
+                html2pdf().from(contentDiv).set(opt).save();
+            });
+            document.getElementById('copy-guide').addEventListener('click', (e) => {
+                const button = e.currentTarget;
+                navigator.clipboard.writeText(contentDiv.innerText).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => { button.textContent = 'Copy Text'; }, 2000);
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                    button.textContent = 'Error!';
+                });
+            });
+            const utterance = new SpeechSynthesisUtterance(contentDiv.innerText);
+            document.getElementById('tts-play').addEventListener('click', () => { speechSynthesis.paused ? speechSynthesis.resume() : speechSynthesis.speak(utterance); });
+            document.getElementById('tts-pause').addEventListener('click', () => speechSynthesis.pause());
+            document.getElementById('tts-stop').addEventListener('click', () => speechSynthesis.cancel());
+        }
+
+        // --- Central Event Listener Setup ---
+        function addEventListeners() {
+            // Header Icons
+            themeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                localStorage.setItem(THEME_KEY, document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                applyTheme();
+            });
+            homeTitle.addEventListener('click', resetApp);
+            historyIcon.addEventListener('click', () => { renderHistoryList(); showView('history'); });
+            chatbotIcon.addEventListener('click', () => showView('chatbot'));
+            aboutIcon.addEventListener('click', () => showModal('about'));
+
+            // File Inputs
+            setupFileHandler(fileInput, fileNameDisplay, (content, count) => {
+                fileContent = content;
+                studyButton.disabled = count <= 0;
+            });
+            setupFileHandler(chatFileInput, chatFileName, (content) => {
+                chatFileContent = content;
+                chatInput.placeholder = content ? "Ask a question about the uploaded file..." : "Ask a question... (Shift+Enter for new line)";
+            });
+
+            // Main Buttons
+            studyButton.addEventListener('click', async () => {
+                if (!fileContent) return;
+                showView('loading');
+                document.getElementById('loading-message').textContent = 'Creating summary...';
+                const summary = await callGemini([{ parts: [{ text: `Summarize the following content in a concise paragraph. Format as clean HTML. Content:\n\n---\n\n${fileContent}` }] }]);
+                if (summary) { 
+                    summaryContent.innerHTML = summary; 
+                    showView('summary'); 
+                } else { showView('upload'); }
+            });
+            document.querySelectorAll('.action-button').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const action = e.currentTarget.dataset.action;
+                    if (action === 'quiz') showModal('quiz');
+                    else if (action === 'flashcards') showModal('flashcard');
+                    else if (action === 'guide') generateStudyGuide();
+                });
+            });
+
+            // Navigation Buttons
+            document.getElementById('start-over-button').addEventListener('click', resetApp);
+            document.getElementById('back-to-options-button').addEventListener('click', () => { window.speechSynthesis.cancel(); showView('summary'); });
+            document.getElementById('back-to-home-button').addEventListener('click', resetApp);
+            document.getElementById('growth-quiz-button').addEventListener('click', () => generateQuiz(true));
+
+            // Modal Buttons
+            document.getElementById('cancel-quiz').addEventListener('click', hideModals);
+            document.getElementById('start-quiz').addEventListener('click', generateQuiz);
+            document.getElementById('cancel-flashcards').addEventListener('click', hideModals);
+            document.getElementById('generate-flashcards').addEventListener('click', generateFlashcards);
+            document.getElementById('close-about-modal').addEventListener('click', hideModals);
+
+            // Dev & API Modals
+            document.getElementById('dev-icon').addEventListener('click', () => showModal('devCode'));
+            document.getElementById('cancel-dev-code').addEventListener('click', hideModals);
+            document.getElementById('submit-dev-code').addEventListener('click', () => {
+                if (document.getElementById('dev-code-input').value === '5684') {
+                    hideModals();
+                    document.getElementById('api-key-input').value = apiKey;
+                    showModal('apiSettings');
+                    document.getElementById('dev-code-input').value = '';
+                    document.getElementById('dev-code-error').classList.add('hidden');
+                } else { document.getElementById('dev-code-error').classList.remove('hidden'); }
+            });
+            document.getElementById('close-api-settings').addEventListener('click', hideModals);
+            document.getElementById('api-key-input').addEventListener('input', (e) => {
+                apiKey = e.target.value;
+                localStorage.setItem(API_KEY, apiKey);
+                updateApiUrl();
+            });
+            document.getElementById('close-api-error').addEventListener('click', hideModals);
+
+            // API List Modal
+            viewApiListBtn.addEventListener('click', () => {
+                showConfirmModal('View Official API List', 'This will show the list of stored API keys. Are you sure?', () => {
+                    renderApiKeyList();
+                    showModal('apiList');
+                });
+            });
+            document.getElementById('add-api-key-btn').addEventListener('click', () => {
+                let keys = JSON.parse(localStorage.getItem(API_KEY_LIST)) || [];
+                const newId = keys.length > 0 ? Math.max(...keys.map(k => k.id)) + 1 : 1;
+                keys.push({ id: newId, key: 'PASTE_NEW_KEY_HERE' });
+                localStorage.setItem(API_KEY_LIST, JSON.stringify(keys));
+                renderApiKeyList();
+            });
+            document.getElementById('save-api-list-btn').addEventListener('click', () => {
+                const newKeys = Array.from(document.querySelectorAll('#api-key-list-container > div')).map(div => ({
+                    id: parseInt(div.dataset.id),
+                    key: div.querySelector('input').value,
+                }));
+                localStorage.setItem(API_KEY_LIST, JSON.stringify(newKeys));
+                hideModals();
+            });
+
+            // Confirmation Modal
+            document.getElementById('confirm-cancel-btn').addEventListener('click', () => {
+                hideModals();
+                confirmCallback = null;
+            });
+            document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+                if (confirmCallback) confirmCallback();
+                modals.confirm.classList.add('hidden');
+                modals.confirm.classList.remove('flex');
+                confirmCallback = null;
+            });
+
+            // Chatbot
+            chatInput.addEventListener('input', () => {
+                chatInput.style.height = 'auto';
+                chatInput.style.height = `${chatInput.scrollHeight}px`;
+            });
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessageToChatbot();
+                }
+            });
+            chatSendBtn.addEventListener('click', sendMessageToChatbot);
+        }
+
+        // Initialize App
+        initializeApp();
+    </script>
+</body>
+</html>
